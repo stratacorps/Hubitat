@@ -1,7 +1,7 @@
 definition(
     name: "Canary Power Monitor",
     namespace: "user",
-    author: "Kevin",
+    author: "Kevin Brackley",
     description: "Monitor selected devices for power outage based on mains status.",
     category: "Convenience",
     iconUrl: "",
