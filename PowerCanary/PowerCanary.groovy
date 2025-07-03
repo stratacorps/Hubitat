@@ -143,7 +143,7 @@ def initialize() {
     }
 
     // Create virtual device if not already created
-    def child = getChildDevice("canaryPowerStatus")
+    def child = getChildDevice("canaryPowerStatus") {
     if (!child) {
         addChildDevice("hubitat", "Virtual Switch", "canaryPowerStatus", [
             name: "Canary Power Status",
