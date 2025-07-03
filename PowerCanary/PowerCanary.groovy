@@ -23,18 +23,7 @@
  * 1.0.0 (2025-07-03) - Initial testing application.
  */
 
- //App metadata
- definition(
-    name: "Canary Power Monitor",
-    namespace: "Brackley",
-    author: "Kevin Brackley",
-    description: "Monitor selected devices for power outage based on mains status.",
-    importURL: "https://raw.githubusercontent.com/stratacorps/Hubitat/refs/heads/main/PowerCanary/PowerCanary.groovy",
-    category: "Convenience",
-    iconUrl: "",
-    iconX2Url: ""
-)
-
+//App metadata
 preferences {
     section("Virtual Device Management") {
         input name: "useCustomSwitch", type: "bool", title: "Use an existing virtual switch instead of auto-created one?", defaultValue: false
@@ -88,10 +77,14 @@ def updated() {
 def uninstalled() {
     getChildDevices()?.each {
         deleteChildDevice(it.deviceNetworkId)
-        if (enableLogging) log.info "Deleted child device: ${it.displayName}"
+        if (enableLogging) {
+            log.info "Deleted child device: ${it.displayName}"
+        }
     }
-    if (enableLogging) log.info "App uninstalled and child devices removed."
-}
+    if (enableLogging) {
+        log.info "App uninstalled and child devices removed."
+    }
+
     if (enableLogging) log.debug "Updated with settings: ${settings}"
     unsubscribe()
     initialize()
@@ -133,6 +126,7 @@ def initialize() {
     }
 
     checkPowerStatus()
+}
     if (clearLogButton) {
         state.outageLog = []
         if (enableLogging) log.info "Outage history log cleared by user."
