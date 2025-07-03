@@ -73,6 +73,7 @@ def updated() {
     unsubscribe()
     initialize()
 }
+}
 
 def uninstalled() {
     getChildDevices()?.each {
@@ -84,7 +85,8 @@ def uninstalled() {
     if (enableLogging) {
         log.info "App uninstalled and child devices removed."
     }
-
+}
+}
     if (enableLogging) log.debug "Updated with settings: ${settings}"
     unsubscribe()
     initialize()
@@ -143,7 +145,7 @@ def initialize() {
     }
 
     // Create virtual device if not already created
-    def child = getChildDevice("canaryPowerStatus") {
+    def child = getChildDevice("canaryPowerStatus")
     if (!child) {
         addChildDevice("hubitat", "Virtual Switch", "canaryPowerStatus", [
             name: "Canary Power Status",
@@ -174,18 +176,9 @@ def logTimestampEvent(message) {
 def checkPowerStatus() {
     def virtualSwitch = state.virtualSwitchId ? getDeviceById(state.virtualSwitchId) : null
     if (!virtualSwitch) {
-        // already handled earlier
+        log.warn "Virtual switch not found"
         return
     }
-    def mainsDevices = canaryDevices.findAll {
-        it.currentValue("powerSource") == "mains"
-    }
-
-    def isPowerOn = triggerMode == "ANY" ?
-        mainsDevices.size() > 0 :
-        mainsDevices.size() == canaryDevices.size()
-
-    def virtualSwitch = getChildDevice("canaryPowerStatus")
     if (virtualSwitch) {
         if (isPowerOn && virtualSwitch.currentValue("switch") != "on") {
             virtualSwitch.on()
