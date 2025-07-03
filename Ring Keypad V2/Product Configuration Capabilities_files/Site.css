@@ -1,0 +1,797 @@
+body
+{
+    font-size: .8em;
+    font-family: 'Ubuntu', Arial, Helvetica, Sans-Serif;
+    color: #6D6E71;
+    background-color:  #fff;
+    margin: 0px;
+}
+
+#SiteContainer 
+{
+    width: 100%;
+    /*height: 100%;*/
+    display: block;
+    background-image: url('B2T_Pattern_Light.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 40%;
+    /*background-size: auto;*/
+    
+}
+
+#SiteContainerNobrand
+{
+    width: 98%;
+    height: 100%;
+    display: block;
+}
+
+.MainContainer
+{
+    /*width: 1002px;*/
+    width: 100%;
+    margin-left: auto;   
+    margin-right: auto; 
+    padding-bottom: 30px;
+    min-height: 400px;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+Header,
+Footer,
+nav,
+section {
+    display: block;
+    
+}
+
+
+.Header
+{
+    width: 100%;
+}
+
+.TopHeader 
+{
+    width: 1002px;
+    margin-left: auto;   
+    margin-right: auto; 
+    display: block;
+    height: 110px;
+}
+
+.InnerHeader
+{
+    height: 145px;
+    background-color: #104B7D;
+}
+
+.Bubbles 
+{
+    height: 105px;
+    width: 1002px;
+    margin-left: auto;   
+    margin-right: auto; 
+    background-image: url('stripe-texture.png');
+    color: White;
+    text-align: left;
+    padding: 20px 0px 20px 30px;
+    
+}  
+
+.Bubbles > h2 
+{
+    font-size: 30px;
+    font-weight: normal;
+    font-family: Arial, 'Helvetica';
+    margin-top: 0px;   
+    margin-left: 0px;   
+    margin-right: 0px;   
+    margin-bottom: 9px;
+}
+
+.Bubbles > p 
+{
+    font-size: 14px;
+    font-weight: normal;
+    font-family: Arial, 'Helvetica';
+    margin: 0px;
+    margin-left: 50px;   
+    margin-right: 175px;
+}
+
+.Menu 
+{
+    display: block;
+    float: right;
+    width: 220px;
+    margin-right: -9px;
+    background-color: #f8981d;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;    
+    height: 25px;
+    text-align: center;
+}
+
+.MenuItem 
+{
+    padding-top: 4px;
+}
+
+.MenuItem > a 
+{
+    float: none;
+    color: White;
+    font-size: 14px;
+}
+
+.Footer
+{
+    width: 100%;
+    text-align:center;
+	font-size:11px;
+ }
+ 
+.BlueFooter
+{
+    width: 100%;
+    padding-top: 20px;
+    background-color: #104B7D;   
+    color: White;
+    height: 40px;
+ }
+ 
+ .WhiteFooter
+{
+    width: 100%;
+    padding-top: 20px;
+    height: 40px;
+    font-size: 10px;
+ }
+
+.SearchInHeader
+{
+	float: right;
+	display: inline-block;
+	margin-bottom: 15px;
+}
+.SearchNotInHeader
+{
+	width: 332px;
+	height:56px;  
+	float: right;
+	margin-top: -75px;
+	margin-right: 50px;	
+}
+
+.ProductDatabase
+{
+    position:relative;
+}
+
+.banner
+{
+    background-image:url('/Content/themes/base/images/Banner_400x100px.jpg');
+    background-repeat: no-repeat;
+    width:400px;
+    height: 100px;
+    float: left;
+    margin-top: 5px;
+    /*margin-right: 100px;*/
+}
+
+.banner a
+{
+    margin-top: 0px;
+    width:400px;
+    height: 100px;
+    display:block;
+}
+
+.logo
+{
+    background-image:url('zwave_alliance_logo.jpg');
+    background-repeat: no-repeat;
+    width:250px;
+    height: 105px;
+    float: left;
+    margin-top: 5px;
+}
+
+.logo a
+{
+    margin-top: 0px;
+    width:250px;
+    height: 105px;
+    display:block;
+}
+
+
+.lineHeader
+{
+border: 1px solid  #174A76;
+position: absolute;
+top: 70px;
+width: 700px;
+font-family:Verdana, Sans-Serif;
+right: 0;
+
+}
+
+/* Headers */
+
+h1
+{
+    position: absolute;
+    color: #174A76;
+    font-size: 11px;
+    left: 80px;
+    top: 70px;
+    font-weight: normal;
+    font-style: italic;
+    font-family:Verdana, Sans-Serif;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+.editor-label 
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field 
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+
+/* Buttons */
+
+.clear { 
+    overflow: hidden;
+    width: 100%;
+}
+
+a.button {
+    background: transparent url('themes/base/images/buttons.png')  no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font-size: 10pt;
+    height: 28px;
+
+    padding-right: 13px; /* sliding doors padding */
+    text-decoration: none;
+}
+
+a.button span {
+    background: transparent url('themes/base/images/buttons-span.png') no-repeat;
+    display: block;
+    line-height: 28px;
+    padding: 0px 0 0px 13px;
+    color:#fff;
+    font-weight:bold;
+}
+a img {border: none; }
+
+a.button:hover {
+    background-position: bottom right;
+    color: #000;
+    outline: none;
+}
+
+a.button:hover span {
+    background-position: bottom left;
+}
+
+/* End button style */
+
+/* Login */
+.login-link
+{
+    position:absolute;
+    top:10px;
+    right:20px;
+    background: transparent url('themes/base/images/login_icon.png') left center no-repeat;
+    padding-left:12px;
+    font-weight:bold;
+    }
+#waitingDiv
+{
+    text-align:center;
+    padding:20px;
+    width:410px;
+    height:70px;
+    }
+.ui-widget
+{
+    font-family:Arial, Sans-serif!important;
+    border:none;
+    
+    }
+   
+body .ui-widget-content
+{
+    
+    background-image:none;
+    background-color:transparent;
+    color:#666;
+    border:none;
+    }
+    body .ui-dialog .ui-dialog-titlebar
+    {
+       background:none;
+       border:0;
+       margin:0;
+       padding:0;
+        }
+body .ui-widget-content a.button
+{
+    margin-left:5px;
+    }
+ body .ui-widget-content  #errMsg
+ {
+     color:Red;
+     margin-top:10px;
+     display:block;
+     font-size:11px;
+     width:100%;
+     float:left;
+     display:block;
+     }
+body .ui-dialog .ui-dialog-titlebar-close 
+{
+    margin:-10px -5px 0 0;
+    }
+#galleryModal
+{
+    background:#fff;
+  }
+#galleryModal .modalImageWrapper
+{
+    padding:20px;
+    max-width:640px;
+    max-height:640px;
+    text-align:center;
+    }
+#galleryModal .modalImageWrapper img
+{
+    max-width:600px;
+    max-height:600px;
+    margin:auto;
+    }
+.outerContainer
+{
+  background:#fff;
+}
+
+.innerContainer
+{
+    width: 410px;
+    height:160px; 
+      padding:20px;
+      margin-right:-20px;
+}
+
+.loginText
+{
+    color: #db922e;
+    font-size: 16pt;
+    border-bottom: 3px solid #174A76;
+    width:400px;
+    line-height: 25pt;
+}
+
+.loginForm
+{
+    margin: 15px auto;
+     width:250px;
+      font-size: 10pt
+}
+
+.loginForm div
+{
+    margin-bottom: 5px;
+     float: right;
+}
+
+.loginForm div div
+{
+    float: left;
+    width: 83px;
+    line-height: 20px;
+  
+}
+
+.regions
+{
+ background: transparent url('themes/base/images/arrow_grey.png') no-repeat;
+ background-position: center left;
+ border-bottom: 1px solid #cfe5ef;
+ line-height: 45px;
+ padding-left: 35px;
+ margin-right: 50px;
+ color:#003a59;
+ font-size: 12pt;
+ text-decoration: none;
+ float:none;
+ display:block;
+ width: auto;
+}
+
+.regions:hover
+{
+     color: #47AA42;
+}
+
+.frequencyContainer 
+{
+    font-size: xx-small; /*10px;*/
+    color: #6D6E71;
+    float: right;
+    display: block;
+    margin-top: 6px
+}
+
+
+.HeaderText
+{
+    color: #47AA42;
+    font-size: 16pt;
+    min-width: 200px;
+    line-height: 25pt;
+}
+
+.SubHeaderText
+{
+    float: left;
+    margin-top: 15px;
+}
+
+.RecommendHeader
+{
+    color: #E47911;
+    font-size: 14pt;
+    width:400px;
+    line-height: 18pt;
+    margin:10px 0 0 0;
+}
+/* DropDown style */
+.styled-select select {
+   background: transparent;
+   width: 268px;
+   padding: 3px;
+   font-size: 13px;
+   border: 1px solid #ccc;
+   height: 28px;
+   -webkit-appearance: none;
+}
+
+
+.styled-select {
+   width: 240px;
+   height: 28px;
+   overflow: hidden;
+   background: url('themes/base/images/DropDownArrow.png') no-repeat right #fff;
+   border-right: 1px solid #ccc;
+   margin-right: 15px;
+   margin-bottom: 10px;
+}
+.sort-by-filter
+{ }
+.sort-by-filter .styled-select,
+.sort-by-filter .textForSelect
+{
+    font-size:12px;
+    float:left;
+}
+
+
+.breadcrumbs > .styled-select
+{
+    height:24px;
+    width:155px;
+    padding: 0px;
+}
+    
+.breadcrumbs > .styled-select select {
+   background: transparent;
+   font-size: 12px;
+   border: 1px solid #ebebeb;
+   height:24px;
+   margin: 0px;
+ }
+ 
+ 
+.breadcrumbs > .textForSelect
+{
+    font-size: 14px;
+    float: left;
+    line-height: 24px;
+    margin-right: 10px;
+}
+ 
+/* End DropDown style */
+
+/* DropDown for side menu style */
+.styled-select-side select {
+   background: transparent;
+   width: 198px;
+  
+   font-size: 12px;
+   border: 1px solid #ccc;
+   height: 22px;
+   -webkit-appearance: none;
+}
+
+
+.styled-select-side {
+   width: 170px;
+   height: 22px;
+   overflow: hidden;
+   background: url('themes/base/images/DropDownArrow.png') no-repeat right #fff;
+   border-right: 1px solid #ccc;
+   margin-right: 15px;
+   margin-bottom: 10px;
+}
+
+#advancedSearch .textForSelect
+{
+    font-size:12px;
+    }
+#advancedSearch label
+{
+   padding:5px 0 3px 0;
+   display:block
+    }
+/* DropDown for side menu style */
+
+.textForSelect
+{
+    font-size: 14px;
+    float: left;
+    line-height: 28px;
+    margin-right: 10px;
+}
+.textForSelect a
+{
+    font-size:14px;
+    }
+
+.float-left
+{
+    float:left;
+}
+
+/*TextBox style */
+
+input.textBox
+{
+  border: 1px solid #174A76; 
+  background: #fff;
+  height: 20px;
+  width: 150px;
+}
+
+.listItemContainer
+{
+    float: left;
+    width: 48%;
+}
+
+.listContainer
+{
+    overflow: hidden;
+    max-width: 800px;
+    margin: auto;
+    width: 95%;
+    padding: 10px;
+}
+
+.lineSeparator
+{
+    border: 1px solid #2C466A; 
+    width:100%;
+    margin-bottom: 20px;
+}
+.lineSeparator2
+{
+    border: 1px solid #ccc; 
+    width:100%;
+    margin-bottom: 20px;
+    margin-top:-5px;
+}
+.single-paragraph
+{
+       border-top: 2px solid #CCCCCC;
+    color: #333333;
+    font-size: 14px;
+    margin: 10px -10px;
+    padding:7px 0 0;
+    
+    }
+.single-paragraph2
+{
+       border-bottom: 2px solid #CCCCCC;
+    color: #333333;
+    font-size: 14px;
+    margin: 10px -10px;
+    padding:0 0 7px;
+    color:#E47911;
+    
+    }
+.single-paragraph3
+{
+       border-bottom: 2px solid #CCCCCC;
+    color: #333333;
+    font-size: 14px;
+    margin: 10px 10px;
+    padding:0 0 7px;
+    
+    }
+.SearchForm
+{
+
+}
+
+.SearchFormNotInHeader
+{
+	float: right;
+	width: 250px;
+	position: relative;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.SearchForm input[type="text"]
+{
+    font-size: 12px;
+    border: 1px solid #CCC;
+    width: 150px;
+}
+
+.SearchForm input[type="submit"]
+{
+    font-size: 12px;
+    border: 1px solid #CCC;
+}
+
+.SearchForm div
+{
+    float:right;
+    width:250px;
+}
+    
+.SearchForm p
+{
+    margin:2px 0 0 0;
+    padding:0;
+    float:right;
+}
+
+.SearchForm p a
+{
+    font-size:11px;
+    color:#fff;
+    text-decoration:none;
+}
+
+.SearchFormNotInHeader input[type="text"]
+{
+    border: 1px solid black;
+	height: 22px;
+	width: 150px;
+}
+
+.SearchFormNotInHeader div
+{
+    float:right;
+    width:250px;
+}
+    
+.SearchFormNotInHeader p
+{
+    margin:2px 0 0 0;
+    padding:0;
+    float:right;
+}
+
+.SearchFormNotInHeader p a
+{
+    font-size:11px;
+    text-decoration:none;
+}
+
+.dotsFirst
+{
+    background: url('themes/base/images/dots.png') no-repeat right bottom;
+    padding-right: 20px;
+   
+margin-right: 3px;
+}
+
+.dotsLast
+{
+    
+    background: url('themes/base/images/dots.png') no-repeat left bottom;
+    padding-left: 20px;
+    margin-left: 3px;
+}
+
+.UnderlineReset
+{
+    text-decoration: none;
+   color : white;
+    font-size: 12px;
+
+}
+
+/*.HelpText div
+{
+    display: none;
+    border: 1px solid #1b365d;
+    height: 20px;
+    margin-left: 10px;
+    background-color: white;
+    color: #1B365D;
+    font-weight: bold;
+}
+.HelpText div:hover 
+{
+    display: block;
+}*/
+

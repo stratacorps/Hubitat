@@ -1,0 +1,733 @@
+﻿
+.sideMenu {
+	width: 250px;
+	float: left;
+}
+.filtersDiv {
+	margin: 5px;	
+}
+
+.headerPrintZWALogo  
+{
+    float: left;  
+    height: 75px;
+}
+.headerPrintCertLogo
+{
+    float: right;
+    height: 120px;
+}
+.ghostText 
+{
+    margin-top: 60px;
+    margin-left: 25px;
+    font-size: 16px;
+    color: #aaa;
+}
+a
+{
+    color: #197be0;
+    font-size: 11px;
+    /*float: right;*/
+    text-decoration:none;
+}
+a:hover
+{
+    text-decoration:none;
+}
+
+
+
+div.productsContainer
+{
+    display: table, table-row;
+    overflow: hidden;
+    width: 100%
+}
+#productList
+{
+    padding-left: 5px;
+}
+
+.productList 
+{
+    /*left: 245px;*/
+	display: table-cell;
+
+    vertical-align: top;
+    /*width: 100%;*/
+    width: 80%;
+    /*min-width: 60%;*/
+    min-width: 500px;
+    /*max-width: 85%;*/
+    /*max-width: 800px;*/
+    max-width: 80%;
+}
+
+/* Manufacturer list */
+.manufacturerList
+{
+    width: 175px; 
+   	display: table-cell;
+    padding-right:15px;
+    border-right: 1px solid  #e1e1e1;
+    vertical-align: top;
+}
+.manufacturerList a
+{
+    margin-top: 10px;
+}
+.advancedSearchOptions
+{
+    /*width: 200px;*/ 
+    width: 20%;
+   	display: table-cell;
+    padding-right:5px;
+    vertical-align: top;
+    /*float: left;*/
+    border-right: 1px solid  #ccc;
+ }
+
+
+
+/* Gallery View */
+.productListing {
+	float: none;
+	/*width: 600px;*/
+    width: 75%;
+    max-width: 90%;
+    min-width: 50%; /*400px;*/
+    /*max-width: 800px;*/
+	/*height: 125px;*/
+    min-height: 150px;
+    max-height: 200px;
+	margin: 10px;
+    margin-right: 0px;
+	padding: 6px;
+	border:1px solid #CFE5EF;
+	background-image: url('themes/base/images/ProductGalleryBG.png');
+	background-position:left bottom;
+	background-repeat: repeat-x;
+	background-color: #FFF;
+	position: relative;
+}
+.ZWavePlusProductListing {
+	border: 2px solid #164a7c;
+    /*height: 160px;*/
+}
+/* General for Product View */
+.productListing .productTitle a
+{
+    position:relative;
+    bottom:auto;
+    right:auto;
+    color: #174A76;	
+    font-size: 12px;
+	font-weight:bold;
+	display: block;
+	margin-bottom: 4px;
+    margin-top: 4px;
+	float:none;
+}
+.productListing .productTitle a:hover
+{
+    color:#47AA42;
+}
+.productListing a 
+{
+    position: absolute;
+    bottom: 10px;
+    /*right: 15px;*/
+}
+.productListingText {
+	font-size: 11px;
+}
+.productListingText a {
+    color:#333;
+}
+.productListingText a:hover {
+    color: blue;
+}
+.productListingTextBold {
+	font-size: 11px;
+	font-weight: bold;
+	color:#333;
+}
+
+
+
+.RankRight {
+    position: absolute;
+    top: 10px;
+    /*left: 130px;*/
+    padding-left: 120px;
+    margin-right: 4px;
+    padding-right: 2px;
+    display: inline-block;
+    /*width: 100%;*/
+    width: 60%;
+    max-width: 60%;
+    min-width: 50%;
+    height: 120px;
+    max-height: 130px;
+    overflow: hidden;
+}
+.RankRightDescription {
+    font-size: smaller;
+    float: none;
+    position: absolute;
+    top: 10px;
+    /*left: 500px;*/
+    right: 16px;
+    margin-right: 4px;
+    padding-right: 2px;
+    margin-left: 4px;
+    padding-left: 2px;
+    width: 9%;
+    /*height: 115px;*/
+    /*min-width: 30%;*/
+}
+
+
+.MoreBottom {
+    position: absolute;
+    bottom: 4px;
+    padding: 0px;
+    right: 50px; /*56%;*/ /*300px;*/
+    white-space: nowrap;
+}
+
+/*AY12-9-21 added style to align pictures horizontally*/
+.row_LR {
+    display: flex;
+}
+/* Create 2 equal columns that sits next to each other */
+.column_LR {
+    flex: 50%;
+    padding: 3px;
+}
+
+.ZWavePlusPicture {
+    height: 50px;
+    padding-top: 0px;
+    position: absolute;
+    top: 0px;
+    /*bottom: 4px;*/
+    /*left: 420px;*/
+}
+.ZWavePlusPicture .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: #174a7c;
+    color: #FFFFFF;
+    text-align: left;
+    font-size: larger;
+    border-radius: 5px;
+    padding: 5px;
+    padding-bottom: 20px;
+    position: absolute;
+    z-index: 7;
+    bottom: auto; /*125%;*/
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.ZWavePlusPicture .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #174a7c transparent transparent transparent;
+}
+.ZWavePlusPicture:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.PlusV2 {
+    padding-top: 0px;
+    position: absolute;
+    font-family: Arial, Verdana;
+    color: #A00000;
+    top: 60px;
+}
+
+    .PlusV2 .tooltiptext {
+        visibility: hidden;
+        width: 400px;
+        background-color: #174a7c;
+        color: #FFFFFF;
+        text-align: left;
+        font-size: larger;
+        border-radius: 5px;
+        padding: 5px;
+        padding-bottom: 20px;
+        position: absolute;
+        z-index: 7;
+        bottom: auto; /*125%;*/
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+        .PlusV2 .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #174a7c transparent transparent transparent;
+        }
+
+    .PlusV2:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+.S2Picture {
+    padding-top: 0px;
+    position: absolute;
+    font-family: Arial, Verdana;
+    color: #4E9E34;
+    top: 60px;
+}
+.S2Picture .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: #174a7c;
+    color: #FFFFFF;
+    text-align: left;
+    font-size: larger;
+    border-radius: 5px;
+    padding: 5px;
+    padding-bottom: 20px;
+    position: absolute;
+    z-index: 7;
+    bottom: auto; /*125%;*/
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.S2Picture .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #174a7c transparent transparent transparent;
+}
+.S2Picture:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.SmartStart {
+    padding-top: 0px;
+    position: absolute;
+    font-family: Arial, Verdana;
+    color: #164a7c;
+    top: 90px;
+}
+.SmartStart .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: #174a7c;
+    color: #FFFFFF;
+    text-align: left;
+    font-size: larger;
+    border-radius: 5px;
+    padding: 5px;
+    padding-bottom: 20px;
+    position: absolute;
+    z-index: 7;
+    bottom: auto; /*125%;*/
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.SmartStart .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #174a7c transparent transparent transparent;
+}
+.SmartStart:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.newProduct {
+    color: #A00000;
+    position: absolute;
+    top: -8px;
+    right: 5px;
+    z-index: 5;
+    font-size: 12px;
+    background-color: #fff;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: bold;
+}
+.image-container
+{
+    border:1px solid #ccc;
+    height:110px;
+    width: 110px;
+    background:#fff;
+    text-align:center;
+    vertical-align:middle;
+    /*align-content: center;*/
+}
+.image-container > span 
+{
+    display: inline-block;
+    vertical-align:middle;
+    height: 100%;
+}
+.galleryImage {
+	max-width: 100px;
+	max-height: 100px;
+	padding: -10px;
+	margin:auto;
+	vertical-align:middle;
+}
+.margin
+{
+    margin-top: 4px;
+}
+.margin-bottom
+{
+    margin-bottom: 8px;
+}
+.center
+{
+    text-align:center;
+}
+.enlarge
+{
+    background-image:url('themes/base/images/zoom.png');
+    background-repeat:no-repeat;
+    background-position:left center;
+    padding-left: 20px;
+    padding-top:3px;
+    padding-bottom: 4px;
+    font-size: 11px;
+    color:#174A76;
+
+}
+
+
+
+
+
+
+/* listView */
+.listView
+{
+   height: 90px;
+   padding: 10px 5px;
+}
+.listViewAlternative
+{
+  
+   background-color: #dce9f0;
+ 
+}
+.listViewImage
+ {
+	width: 80px;
+	height: 80px;
+	border: 1px solid #174A76;
+	float: left;
+	margin-right: 15px;
+}
+.margin-listView
+{
+    margin-top: 10px;
+}
+.enlarge-listView
+{
+    background-image:url('themes/base/images/zoom.png');
+    background-repeat:no-repeat;
+    background-position:left center;
+    padding-left: 18px;
+    font-size: 10pt;
+}
+a.marginTop
+{
+    margin-top: 65px;
+}
+
+/* Products details */
+.ProductInformation
+{
+ /*float: left;*/
+ width: 60%; /*600px;*/   
+ position: absolute;
+ top: 0px;
+ left: 0px;
+}
+.ProductImageBuy
+{
+    /*float: left;*/
+    width: 40%;
+    min-width: 30%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.buy-links {
+    width: 50%;
+    height: 50%;
+    position: relative;
+    /*left: 5%;*/
+    left: 25px;
+    top: 20px;
+    /*position: absolute;*/
+}
+.buy-links img
+{
+    width: 80%;
+    text-align: center;
+}
+
+
+h2.Title 
+{
+    color: #174A76;
+    font-size: 16pt;
+    margin-top:-5px;
+}
+a.ProductDetails 
+{
+   text-decoration:none;
+   float:none; 
+}
+a.ProductDetails:hover
+{
+    text-decoration:underline;
+    cursor: pointer;
+}
+img.ProductDetails
+{
+
+float: left;
+margin-left: 40px;
+max-width: 320px;
+margin-top: 40px;
+padding: 10px;
+background: #fff;
+}
+.info 
+{
+    margin-bottom: 15px;
+
+}
+.info div
+{
+   padding:3px 0;
+    border-bottom:1px solid #ebebeb;
+    }
+.info div:nth-child(even) 
+{
+    background: #f6f6f6;
+    }
+.info div span
+{
+      font-weight:bold;
+}
+.info div a
+{
+    color: #197be0;
+    text-decoration: none;
+    font-size: 12px;
+    float: none;
+    cursor: pointer;
+}
+.info div a:hover
+{
+    text-decoration:underline;
+}
+.ytVideo
+{
+    margin-top: 40px;
+}
+.recommendedProducts
+{
+    float:left;
+    margin:0 7px;
+    width:135px;
+    }
+.recommendedProducts a
+{
+    float:left;
+    padding:5px 0 20px 0;
+    }
+.recommendedProducts .image-container a    
+{
+    width:135px;
+    height:135px;
+    padding:0;
+    display:block
+    } 
+.recommendedProducts .image-container a:hover
+{
+    border:1px solid #197BE0;
+    width:133px;
+    height:133px;
+     }
+.recommendedProducts  .image-container 
+{
+    width:135px;
+    height:135px;
+    line-height: 135px;
+    }
+.recommendedProducts  .galleryImage {
+    line-height: 135px;
+    margin: auto;
+    max-height: 120px;
+    max-width: 120px;
+}
+.page 
+{
+   color: #174A76;
+   font-size: 11px;
+   margin: 0 2px;
+   text-decoration: none;
+   float:none;
+}
+.selected
+{
+    color: #db922e;
+    font-weight: bold;
+}
+.AssociatedCategories 
+{
+    margin-top: 20px;
+}
+.AssociatedCategories a
+{
+    margin-right: 7px;
+  
+}
+.other-from-manufacturer
+{
+    padding:4px 0;
+    }
+
+
+/* Pagination button */
+.clear { 
+    overflow: hidden;
+    width: 100%;
+}
+.PagButton {
+    background: transparent url('themes/base/images/PaginationArrowLeft.png')  no-repeat scroll top right;
+    display: block;
+    height: 22px;
+    width: 11px;
+    margin-right: 6px;
+    text-decoration: none;
+    padding: 0px;
+    border: 0px;
+}
+.PagButton:hover {
+    background-position: center right;
+    outline: none;
+}
+.PagButtonDis {
+     background: transparent url('themes/base/images/PaginationArrowLeft.png')  no-repeat scroll bottom right;
+    display: block;
+    height: 22px;
+    width: 11px;
+    margin-right: 6px;
+    text-decoration: none;
+    padding: 0px;
+    border: 0px;
+    outline: none;
+}
+.PagButtonRight {
+    background: transparent url('themes/base/images/PaginationArrowRight.png')  no-repeat scroll top right;
+    display: block;
+    height: 22px;
+    width: 11px;
+    margin-left: 6px;
+    text-decoration: none;
+    padding: 0px;
+    border: 0px;
+}
+.PagButtonRight:hover {
+    background-position: center right;
+    outline: none;
+}
+.PagButtonRightDis {
+     background: transparent url('themes/base/images/PaginationArrowRight.png')  no-repeat scroll bottom right;
+    display: block;
+    height: 22px;
+    width: 11px;
+    margin-left: 6px;
+    text-decoration: none;
+    padding: 0px;
+    border: 0px;
+    outline: none;
+}
+.pagination
+{
+    width:300px;
+    margin: 15px auto;
+    line-height: 22px;
+}
+.pagination div
+{
+    float:left;
+}
+
+
+.checkboxes
+{
+    font-size: 12px;
+    line-height: 20px;
+    margin:3px 0;
+}
+
+.leftSideHeader
+{
+    color: #E47911;
+    font-weight: bold;
+    border-bottom: 1px solid  #A5B8C5;
+    line-height: 30px;
+    margin-bottom: 15px
+}
+.advancedSearchHeader
+{
+    color: #E47911;
+    font-weight: bold;
+    border-bottom: 1px solid  #A5B8C5;
+    line-height: 30px;
+    margin-bottom: 15px
+}
+.checkboxes input[type="checkbox"]
+{
+width: 15px;
+height: 15px;
+padding: 0;
+margin: -3px 3px 0 0;
+vertical-align: middle;
+}
