@@ -24,10 +24,6 @@
  * 1.0.0 (2025-07-03) - Initial testing application.
  */
 
- def getVersion() {
-    "1.0.0"
- }
-
  //App metadata
  definition(
     name: "Canary Power Monitor",
@@ -41,6 +37,13 @@
 )
 
 preferences {
+    section("Virtual Device Management") {
+        input name: "useCustomSwitch", type: "bool", title: "Use an existing virtual switch instead of auto-created one?", defaultValue: false
+        input name: "customSwitch", type: "capability.switch", title: "Select existing virtual switch", required: false, multiple: false
+    }
+    section("Child Device Info") {
+        paragraph "This app creates or uses a virtual switch named 'Canary Power Status' to reflect power status. It is listed as a child device under this app."
+    }
     section("Maintenance Options") {
         input name: "clearLogButton", type: "bool", title: "Clear Outage History Log Now?", defaultValue: false
         input name: "exportLogButton", type: "bool", title: "Export Outage Log to Logs Now?", defaultValue: false
@@ -68,6 +71,10 @@ preferences {
 
 def stateOutageNotified = false
 
+def getDeviceById(id) {
+    return id ? location.devices.find { it.id == id } : null
+}
+
 def installed() {
     if (enableLogging) log.debug "Installed with settings: ${settings}"
     initialize()
@@ -79,7 +86,54 @@ def updated() {
     initialize()
 }
 
+def uninstalled() {
+    getChildDevices()?.each {
+        deleteChildDevice(it.deviceNetworkId)
+        if (enableLogging) log.info "Deleted child device: ${it.displayName}"
+    }
+    if (enableLogging) log.info "App uninstalled and child devices removed."
+}
+    if (enableLogging) log.debug "Updated with settings: ${settings}"
+    unsubscribe()
+    initialize()
+}
+
 def initialize() {
+    if (clearLogButton) {
+        state.outageLog = []
+        if (enableLogging) log.info "Outage history log cleared by user."
+    }
+    if (exportLogButton && state.outageLog) {
+        log.info "Exporting ${state.outageLog.size()} outage log entries:"
+        state.outageLog.eachWithIndex { entry, i ->
+            log.info "[${i + 1}] Start: ${entry.start}, End: ${entry.end}, Duration: ${entry.duration}"
+        }
+    }
+
+    // Subscribe to all powerSource changes
+    canaryDevices.each { device ->
+        subscribe(device, "powerSource", powerSourceHandler)
+    }
+
+    // Use existing virtual switch or create new one
+    if (useCustomSwitch && customSwitch) {
+        state.virtualSwitchId = customSwitch.id
+        if (enableLogging) log.debug "Using user-selected virtual switch: ${customSwitch.displayName}"
+    } else {
+        def child = getChildDevice("canaryPowerStatus")
+        if (!child) {
+            addChildDevice("hubitat", "Virtual Switch", "canaryPowerStatus", [
+                name: "Canary Power Status",
+                label: "Canary Power Status",
+                isComponent: true
+            ])
+            if (enableLogging) log.debug "Created virtual switch: Canary Power Status"
+        }
+        def vs = getChildDevice("canaryPowerStatus")
+        state.virtualSwitchId = vs?.id
+    }
+
+    checkPowerStatus()
     if (clearLogButton) {
         state.outageLog = []
         if (enableLogging) log.info "Outage history log cleared by user."
@@ -125,6 +179,11 @@ def logTimestampEvent(message) {
 }
 
 def checkPowerStatus() {
+    def virtualSwitch = state.virtualSwitchId ? getDeviceById(state.virtualSwitchId) : null
+    if (!virtualSwitch) {
+        // already handled earlier
+        return
+    }
     def mainsDevices = canaryDevices.findAll {
         it.currentValue("powerSource") == "mains"
     }
