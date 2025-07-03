@@ -45,6 +45,7 @@ preferences {
         paragraph "This app creates or uses a virtual switch named 'Canary Power Status' to reflect power status. It is listed as a child device under this app."
     }
     section("Maintenance Options") {
+        input name: "resetStatsButton", type: "bool", title: "Reset outage statistics?", defaultValue: false
         input name: "clearLogButton", type: "bool", title: "Clear Outage History Log Now?", defaultValue: false
         input name: "exportLogButton", type: "bool", title: "Export Outage Log to Logs Now?", defaultValue: false
     }
@@ -102,6 +103,16 @@ def uninstalled() {
 }
 
 def initialize() {
+    if (resetStatsButton) {
+        state.totalOutages = 0
+        state.totalOutageDuration = 0
+        def virtualSwitch = getVirtualSwitch()
+        if (virtualSwitch) {
+            sendEvent(name: "totalOutages", value: 0)
+            sendEvent(name: "totalOutageDuration", value: "00:00:00")
+        }
+        if (enableLogging) log.info "Outage statistics reset by user."
+    }
     if (clearLogButton) {
         state.outageLog = []
         if (enableLogging) log.info "Outage history log cleared by user."
@@ -164,6 +175,24 @@ def delayedCheckPowerStatus() {
 }
 
 def checkPowerStatus() {
+    // Update totals if restoring power
+    def restoreTime = now()
+    if (state.outageStartTime) {
+        def outageDuration = ((restoreTime - state.outageStartTime) / 1000).toLong()
+        state.totalOutages = (state.totalOutages ?: 0) + 1
+        state.totalOutageDuration = (state.totalOutageDuration ?: 0) + outageDuration
+
+        def hours = (state.totalOutageDuration / 3600).toInteger()
+        def minutes = (state.totalOutageDuration % 3600 / 60).toInteger()
+        def seconds = (state.totalOutageDuration % 60).toInteger()
+        def formattedTotal = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+
+        def virtualSwitch = getVirtualSwitch()
+        if (virtualSwitch) {
+            sendEvent(name: "totalOutages", value: state.totalOutages)
+            sendEvent(name: "totalOutageDuration", value: formattedTotal)
+        }
+    }
     def virtualSwitch = getVirtualSwitch()
     if (!virtualSwitch) {
         log.warn "Virtual switch not found"
