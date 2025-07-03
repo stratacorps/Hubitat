@@ -1,5 +1,5 @@
 /**
- * **************************  Switch Dashboard **************************
+ * Canary Power Monitor
  *
  * MIT License - see full license in repository LICENSE file
  * Copyright (c) 2020 Mattias Fornander (@mfornander)
