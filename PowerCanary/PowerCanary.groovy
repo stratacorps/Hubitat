@@ -1,8 +1,40 @@
-definition(
+/**
+ * **************************  Switch Dashboard **************************
+ *
+ * MIT License - see full license in repository LICENSE file
+ * Copyright (c) 2020 Mattias Fornander (@mfornander)
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Description: Allows the monitoring of selected devices that have powerSource options available to determine
+ * if a power outage may have occurred. Note that it is obvious that if your Hubitat hub is not on a battery
+ * backup this is of no use. Many Zwave externders have battery backup and will report powerSource changes
+ * from "mains" to "battery" when power is lost. If your hub is on a different power source, we can capture
+ * this event for reporting, logging, and later integration with device restoration.
+ *
+ * Developed with OpenAI ChatGPT
+ *
+ * Versions:
+ * 1.0.0 (2025-07-03) - Initial testing application.
+ */
+
+ def getVersion() {
+    "1.0.0"
+ }
+
+ //App metadata
+ definition(
     name: "Canary Power Monitor",
-    namespace: "user",
+    namespace: "Brackley",
     author: "Kevin Brackley",
     description: "Monitor selected devices for power outage based on mains status.",
+    importURL: "https://raw.githubusercontent.com/stratacorps/Hubitat/refs/heads/main/PowerCanary/PowerCanary.groovy",
     category: "Convenience",
     iconUrl: "",
     iconX2Url: ""
