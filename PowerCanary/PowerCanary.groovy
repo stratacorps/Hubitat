@@ -2,7 +2,6 @@
  * Canary Power Monitor
  *
  * MIT License - see full license in repository LICENSE file
- * Copyright (c) 2020 Mattias Fornander (@mfornander)
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
