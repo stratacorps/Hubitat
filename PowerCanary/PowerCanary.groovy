@@ -23,7 +23,19 @@
  * 1.0.0 (2025-07-03) - Initial testing application.
  */
 
-//App metadata
+// App metadata
+k
+definition(
+    name: "Canary Power Monitor",
+    namespace: "Brackley",
+    author: "Kevin Brackley",
+    description: "Monitor selected devices for power outage based on mains status.",
+    importURL: "https://raw.githubusercontent.com/stratacorps/Hubitat/refs/heads/main/PowerCanary/PowerCanary.groovy",
+    category: "Convenience",
+    iconUrl: "",
+    iconX2Url: ""
+)
+
 preferences {
     section("Virtual Device Management") {
         input name: "useCustomSwitch", type: "bool", title: "Use an existing virtual switch instead of auto-created one?", defaultValue: false
@@ -57,10 +69,13 @@ preferences {
     }
 }
 
+// Functions are now restored to a clean state and duplicate/invalid blocks removed.
+
 def stateOutageNotified = false
 
-def getDeviceById(id) {
-    return id ? location.devices.find { it.id == id } : null
+def getVirtualSwitch() {
+    if (useCustomSwitch && customSwitch) return customSwitch
+    return getChildDevice("canaryPowerStatus")
 }
 
 def installed() {
@@ -73,7 +88,6 @@ def updated() {
     unsubscribe()
     initialize()
 }
-}
 
 def uninstalled() {
     getChildDevices()?.each {
@@ -85,11 +99,6 @@ def uninstalled() {
     if (enableLogging) {
         log.info "App uninstalled and child devices removed."
     }
-}
-}
-    if (enableLogging) log.debug "Updated with settings: ${settings}"
-    unsubscribe()
-    initialize()
 }
 
 def initialize() {
@@ -104,15 +113,14 @@ def initialize() {
         }
     }
 
-    // Subscribe to all powerSource changes
     canaryDevices.each { device ->
         subscribe(device, "powerSource", powerSourceHandler)
     }
 
-    // Use existing virtual switch or create new one
     if (useCustomSwitch && customSwitch) {
         state.virtualSwitchId = customSwitch.id
         if (enableLogging) log.debug "Using user-selected virtual switch: ${customSwitch.displayName}"
+        checkPowerStatus()
     } else {
         def child = getChildDevice("canaryPowerStatus")
         if (!child) {
@@ -122,40 +130,12 @@ def initialize() {
                 isComponent: true
             ])
             if (enableLogging) log.debug "Created virtual switch: Canary Power Status"
-        }
-        def vs = getChildDevice("canaryPowerStatus")
-        state.virtualSwitchId = vs?.id
-    }
-
-    checkPowerStatus()
-}
-    if (clearLogButton) {
-        state.outageLog = []
-        if (enableLogging) log.info "Outage history log cleared by user."
-    }
-    if (exportLogButton && state.outageLog) {
-        log.info "Exporting ${state.outageLog.size()} outage log entries:"
-        state.outageLog.eachWithIndex { entry, i ->
-            log.info "[${i + 1}] Start: ${entry.start}, End: ${entry.end}, Duration: ${entry.duration}"
+            runIn(3, "delayedCheckPowerStatus")
+        } else {
+            state.virtualSwitchId = child.id
+            checkPowerStatus()
         }
     }
-    // Subscribe to all powerSource changes
-    canaryDevices.each { device ->
-        subscribe(device, "powerSource", powerSourceHandler)
-    }
-
-    // Create virtual device if not already created
-    def child = getChildDevice("canaryPowerStatus")
-    if (!child) {
-        addChildDevice("hubitat", "Virtual Switch", "canaryPowerStatus", [
-            name: "Canary Power Status",
-            label: "Canary Power Status",
-            isComponent: true
-        ])
-        if (enableLogging) log.debug "Created virtual switch: Canary Power Status"
-    }
-
-    checkPowerStatus()
 }
 
 def powerSourceHandler(evt) {
@@ -165,7 +145,7 @@ def powerSourceHandler(evt) {
 
 def logTimestampEvent(message) {
     if (!enableTimestampLog) return
-    def virtualSwitch = getChildDevice("canaryPowerStatus")
+    def virtualSwitch = getVirtualSwitch()
     if (virtualSwitch) {
         def nowStr = new Date().format("yyyy-MM-dd HH:mm:ss", location.timeZone)
         def fullMsg = "[${nowStr}] ${message}"
@@ -173,63 +153,87 @@ def logTimestampEvent(message) {
     }
 }
 
+def delayedCheckPowerStatus() {
+    def vs = getChildDevice("canaryPowerStatus")
+    if (vs) {
+        state.virtualSwitchId = vs.id
+        checkPowerStatus()
+    } else {
+        log.warn "Virtual switch still not found after delay"
+    }
+}
+
 def checkPowerStatus() {
-    def virtualSwitch = state.virtualSwitchId ? getDeviceById(state.virtualSwitchId) : null
+    def virtualSwitch = getVirtualSwitch()
     if (!virtualSwitch) {
         log.warn "Virtual switch not found"
         return
     }
-    if (virtualSwitch) {
-        if (isPowerOn && virtualSwitch.currentValue("switch") != "on") {
-            virtualSwitch.on()
-            if (enableLogging) log.info "Power restored (switch ON)"
-            logTimestampEvent("Power restored")
-            def restoreTime = now()
-            if (state.outageStartTime) {
-                def outageDuration = (restoreTime - state.outageStartTime) / 1000
-                def durationText = "Outage duration: ${Math.round(outageDuration / 60)} min ${outageDuration % 60} sec"
-                sendEvent(name: "lastOutageDuration", value: durationText, descriptionText: durationText, displayed: true)
-                                def outageRecord = [
-                    start: new Date(state.outageStartTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone),
-                    end: new Date(restoreTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone),
-                    duration: durationText
-                ]
-                if (!state.outageLog) state.outageLog = []
-                state.outageLog.add(0, outageRecord)
-                def limit = Integer.parseInt(maxOutageLogSize ?: "10")
-                if (state.outageLog.size() > limit) {
-                    state.outageLog = state.outageLog.take(limit)
-                }
-                def summaryText = "${outageRecord.start} to ${outageRecord.end} (${outageRecord.duration})"
-                sendEvent(name: "lastOutageSummary", value: summaryText, descriptionText: summaryText, displayed: true)
 
-                state.outageStartTime = null
+    def mainsDevices = canaryDevices.findAll {
+        it.currentValue("powerSource") == "mains"
+    }
+
+    def isPowerOn = triggerMode == "ANY" ?
+        mainsDevices.size() > 0 :
+        mainsDevices.size() == canaryDevices.size()
+
+    if (isPowerOn && virtualSwitch.currentValue("switch") != "on") {
+        virtualSwitch.on()
+        if (enableLogging) log.info "Power restored (switch ON)"
+        logTimestampEvent("Power restored")
+        def restoreTime = now()
+
+        if (state.outageStartTime) {
+            def outageDuration = ((restoreTime - state.outageStartTime) / 1000).toLong()
+            def durationText = "Outage duration: ${Math.round(outageDuration / 60)} min ${outageDuration % 60} sec"
+            sendEvent(name: "lastOutageDuration", value: durationText, descriptionText: durationText, displayed: true)
+
+            def outageRecord = [
+                start: new Date(state.outageStartTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone),
+                end: new Date(restoreTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone),
+                duration: durationText
+            ]
+
+            if (!state.outageLog) state.outageLog = []
+            state.outageLog.add(0, outageRecord)
+            def limit = Integer.parseInt(maxOutageLogSize ?: "10")
+            if (state.outageLog.size() > limit) {
+                state.outageLog = state.outageLog.take(limit)
             }
-            sendEvent(name: "lastRestoreTime", value: new Date(restoreTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone), displayed: true)
-            if (notifyDevice && notifyOnRestore) {
-                notifyDevice.each {
-                    it.deviceNotification(restoreMessage ?: "\uD83C\uDFE0 Power restored (Canary Power Monitor)")
-                }
-            }
-            state.outageNotified = false
-        } else if (!isPowerOn && virtualSwitch.currentValue("switch") != "off") {
-            virtualSwitch.off()
-            if (enableLogging) log.info "Power outage detected (switch OFF)"
-            logTimestampEvent("Power outage detected")
-            state.outageStartTime = now()
-            sendEvent(name: "lastOutageTime", value: new Date(state.outageStartTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone), displayed: true)
-            if (notifyDevice && notifyOnOutage) {
-                if (!limitOutageNotifications || !state.outageNotified) {
-                    notifyDevice.each {
-                        it.deviceNotification(outageMessage ?: "\u26A0\uFE0F Power outage detected (Canary Power Monitor)")
-                    }
-                    state.outageNotified = true
-                } else {
-                    if (enableLogging) log.debug "Outage notification already sent, skipping."
-                }
+
+            def summaryText = "${outageRecord.start} to ${outageRecord.end} (${outageRecord.duration})"
+            sendEvent(name: "lastOutageSummary", value: summaryText, descriptionText: summaryText, displayed: true)
+
+            state.outageStartTime = null
+        }
+
+        sendEvent(name: "lastRestoreTime", value: new Date(restoreTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone), displayed: true)
+
+        if (notifyDevice && notifyOnRestore) {
+            notifyDevice.each {
+                it.deviceNotification(restoreMessage ?: "🏠 Power restored (Canary Power Monitor)")
             }
         }
-    } else {
-        log.warn "Virtual switch not found"
+
+        state.outageNotified = false
+
+    } else if (!isPowerOn && virtualSwitch.currentValue("switch") != "off") {
+        virtualSwitch.off()
+        if (enableLogging) log.info "Power outage detected (switch OFF)"
+        logTimestampEvent("Power outage detected")
+        state.outageStartTime = now()
+        sendEvent(name: "lastOutageTime", value: new Date(state.outageStartTime).format("yyyy-MM-dd HH:mm:ss", location.timeZone), displayed: true)
+
+        if (notifyDevice && notifyOnOutage) {
+            if (!limitOutageNotifications || !state.outageNotified) {
+                notifyDevice.each {
+                    it.deviceNotification(outageMessage ?: "⚠️ Power outage detected (Canary Power Monitor)")
+                }
+                state.outageNotified = true
+            } else {
+                if (enableLogging) log.debug "Outage notification already sent, skipping."
+            }
+        }
     }
 }
