@@ -24,7 +24,7 @@
  */
 
 // App metadata
-k
+
 definition(
     name: "Canary Power Monitor",
     namespace: "Brackley",
@@ -135,7 +135,7 @@ def initialize() {
     } else {
         def child = getChildDevice("canaryPowerStatus")
         if (!child) {
-            addChildDevice("hubitat", "Virtual Switch", "canaryPowerStatus", [
+            addChildDevice("Brackley", "Canary Power Status", "canaryPowerStatus", [
                 name: "Canary Power Status",
                 label: "Canary Power Status",
                 isComponent: true
@@ -211,7 +211,6 @@ def checkPowerStatus() {
         virtualSwitch.on()
         if (enableLogging) log.info "Power restored (switch ON)"
         logTimestampEvent("Power restored")
-        def restoreTime = now()
 
         if (state.outageStartTime) {
             def outageDuration = ((restoreTime - state.outageStartTime) / 1000).toLong()
